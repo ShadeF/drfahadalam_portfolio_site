@@ -1,4 +1,5 @@
 // Fade-in on scroll
+
 const fadeObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -17,13 +18,13 @@ document.querySelectorAll(".fade-in").forEach((el, index) => {
 });
 
 // Elements
+
 const navLinks = document.querySelectorAll(".nav-links a");
 const sections = document.querySelectorAll("section[id]");
 const backToTop = document.querySelector(".back-to-top");
 const navToggle = document.querySelector(".nav-toggle");
 const navPanel = document.querySelector(".nav-panel");
 const body = document.body;
-
 let savedScrollY = 0;
 
 function lockScroll() {
@@ -48,7 +49,6 @@ function scrollToTarget(target) {
   const header = document.querySelector(".site-header");
   const offset = header ? header.offsetHeight : 0;
   const y = target.getBoundingClientRect().top + window.pageYOffset - offset;
-
   window.scrollTo({
     top: y,
     behavior: "smooth",
@@ -70,7 +70,6 @@ function closeMenu() {
   navToggle.setAttribute("aria-expanded", "false");
   navToggle.setAttribute("aria-label", "Open menu");
   body.classList.remove("menu-open");
-
   unlockScroll();
 }
 
@@ -91,18 +90,13 @@ if (navPanel) {
   navPanel.addEventListener("click", (e) => {
     const link = e.target.closest("a[href^='#']");
     if (!link) return;
-
     const href = link.getAttribute("href");
     if (!href || href === "#") return;
-
     const target = document.querySelector(href);
     if (!target) return;
-
     e.preventDefault();
     e.stopPropagation();
-
     closeMenu();
-
     setTimeout(() => {
       scrollToTarget(target);
     }, 80);
@@ -112,14 +106,11 @@ if (navPanel) {
 // Smooth scroll for all other hash links outside the mobile drawer
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   if (anchor.closest(".nav-panel")) return;
-
   const href = anchor.getAttribute("href");
   if (!href || href === "#") return;
-
   anchor.addEventListener("click", (e) => {
     const target = document.querySelector(href);
     if (!target) return;
-
     e.preventDefault();
     scrollToTarget(target);
   });
@@ -158,13 +149,10 @@ const submitBtn = document.querySelector(".submit-btn");
 if (form) {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-
     submitBtn.disabled = true;
     submitBtn.textContent = "Sending...";
-
     try {
       const formData = new FormData(form);
-
       const response = await fetch(form.action, {
         method: "POST",
         body: formData,
@@ -172,17 +160,13 @@ if (form) {
           Accept: "application/json",
         },
       });
-
       if (response.ok) {
         form.reset();
-
         submitBtn.disabled = false;
         submitBtn.textContent = "Send message";
-
         if (toast) {
           toast.textContent = "Message sent successfully.";
           toast.classList.add("show");
-
           setTimeout(() => {
             toast.classList.remove("show");
           }, 4000);
@@ -192,14 +176,11 @@ if (form) {
       }
     } catch (error) {
       console.error(error);
-
       submitBtn.disabled = false;
       submitBtn.textContent = "Send message";
-
       if (toast) {
         toast.textContent = "Something went wrong. Please try again.";
         toast.classList.add("show");
-
         setTimeout(() => {
           toast.classList.remove("show");
         }, 4000);
